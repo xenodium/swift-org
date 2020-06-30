@@ -10,7 +10,7 @@ import Foundation
 
 /// Index of elements within org file.
 public struct OrgIndex: CustomStringConvertible, Hashable {
-    var indexes: [Int]
+    public private(set) var indexes: [Int]
 
     public init(_ theIndexes: [Int] = [0]) {
         indexes = theIndexes
