@@ -27,19 +27,19 @@ extension Section: Textifiable {
             headlineComponents.append(t)
         }
         lines += [headlineComponents.joined(separator: " ")]
-        
+
         // write drawers
-        
+
         for d in drawers ?? [] {
             lines += d.textify(indent: stars + 1)
         }
-        
+
         for n in content {
             if let tn = n as? Textifiable {
                 lines += tn.textify(indent: stars + 1)
             }
         }
-        lines += ["\n"]
+
         return lines
     }
 }
@@ -66,7 +66,7 @@ extension Block: Textifiable {
 extension List: Textifiable {
     func textify(indent: Int) -> [String] {
         // TODO impl sublist for Textifiable
-        
+
         return items.enumerated().map { index, item in
             var parts = [ordered ? "\(index)." : "-"]
             if let c = item.checked {
@@ -107,12 +107,12 @@ extension Drawer: Textifiable {
 }
 
 extension OrgDocument: Textifiable {
-    
+
     func textify(indent: Int = 0) -> [String] {
         var lines = [String]()
         let settingLines = settings.map { k, v in "#+\(k): \(v)" }
         lines.append(contentsOf: settingLines)
-        
+
         for node in content {
             if let n = node as? Textifiable {
                 lines += n.textify(indent: indent)
@@ -120,7 +120,7 @@ extension OrgDocument: Textifiable {
         }
         return lines
     }
-    
+
     public func toText() -> String {
         return self.textify().joined(separator: "\n")
     }
